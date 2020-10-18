@@ -30,7 +30,8 @@ public enum ChatChannel
 	[Description("")] 	Combat 		= 1 << 16,
 	[Description("")]	Warning		= 1 << 17,
 	[Description("")]	Action		= 1 << 18,
-	[Description("")]	Admin		= 1 << 19
+	[Description("")]	Admin		= 1 << 19,
+	[Description("")]	Mentor		= 1 << 20
 }
 
 /// <summary>

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using AdminTools;
+using AdminTools.MentorChat;
 using Audio.Managers;
 using Initialisation;
 using Mirror;
@@ -43,6 +44,8 @@ public class UIManager : MonoBehaviour, IInitialise
 	public AnimationCurve strandedZoomOutCurve;
 	public AdminChatButtons adminChatButtons;
 	public AdminChatWindows adminChatWindows;
+	public MentorChatButtons mentorChatButtons;
+	public MentorChatWindows mentorChatWindows;
 	public ProfileScrollView profileScrollView;
 	public PlayerAlerts playerAlerts;
 	public GUIAntagBanner antagBanner;

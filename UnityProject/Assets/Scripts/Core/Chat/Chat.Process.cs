@@ -40,7 +40,6 @@ public partial class Chat
 	public Color warningColor;
 	public Color defaultColor;
 
-
 	/// <summary>
 	/// This channels can't be heared as sound by other players (like binary or changeling hivemind)
 	/// </summary>
@@ -50,8 +49,8 @@ public partial class Chat
 	/// This channels are OOC or service messages and shouldn't affect IC communications
 	/// </summary>
 	public const ChatChannel ServiceChannels = ChatChannel.Action | ChatChannel.Admin | ChatChannel.Combat
-	                                           | ChatChannel.Examine | ChatChannel.OOC | ChatChannel.System |
-	                                           ChatChannel.Warning;
+											   | ChatChannel.Examine | ChatChannel.OOC | ChatChannel.System |
+											   ChatChannel.Warning | ChatChannel.Mentor;
 
 	/// <summary>
 	/// This channels are either non verbal communication (Ghost, Binary) or some serivice channel (OOC, Action)
@@ -122,7 +121,7 @@ public partial class Chat
 		}
 		// Yell
 		else if ((message == message.ToUpper(CultureInfo.InvariantCulture) // Is it all caps?
-		          && message.Any(char.IsLetter))) // AND does it contain at least one letter?
+				  && message.Any(char.IsLetter))) // AND does it contain at least one letter?
 		{
 			chatModifiers |= ChatModifier.Yell;
 		}
@@ -175,8 +174,8 @@ public partial class Chat
 		//Skip everything if it is an action or examine message or if it is a local message
 		//without a speaker (which is used by machines)
 		if (channels.HasFlag(ChatChannel.Examine) || channels.HasFlag(ChatChannel.Action)
-		                                          || channels.HasFlag(ChatChannel.Local) &&
-		                                          string.IsNullOrEmpty(speaker))
+												  || channels.HasFlag(ChatChannel.Local) &&
+												  string.IsNullOrEmpty(speaker))
 		{
 			return AddMsgColor(channels, $"<i>{message}</i>");
 		}
@@ -215,7 +214,7 @@ public partial class Chat
 		//Ghosts don't get modifiers
 		if (channels.HasFlag(ChatChannel.Ghost))
 		{
-			string[] _ghostVerbs = {"cries", "moans"};
+			string[] _ghostVerbs = { "cries", "moans" };
 			return AddMsgColor(channels, $"[dead] <b>{speaker}</b> {_ghostVerbs.PickRandom()}: {message}");
 		}
 
@@ -285,8 +284,7 @@ public partial class Chat
 		return output;
 	}
 
-
-//TODO move all these methods to a proper SpeechModifier SO
+	//TODO move all these methods to a proper SpeechModifier SO
 	private static string Hiss(Match m)
 	{
 		string x = m.ToString();
@@ -353,8 +351,8 @@ public partial class Chat
 			//Combined message at average position
 			stringBuilder.Clear();
 
-//			int averageX = 0;
-//			int averageY = 0;
+			//			int averageX = 0;
+			//			int averageY = 0;
 			Vector2Int lastPos = Vector2Int.zero;
 			int count = 1;
 
@@ -366,13 +364,13 @@ public partial class Chat
 				}
 
 				stringBuilder.Append(msg.Message);
-//				averageX += msg.WorldPosition.x;
-//				averageY += msg.WorldPosition.y;
+				//				averageX += msg.WorldPosition.x;
+				//				averageY += msg.WorldPosition.y;
 				lastPos = msg.WorldPosition;
 				count++;
 			}
 
-//			AddLocalMsgToChat(stringBuilder.Append(postfix).ToString(), new Vector2Int(averageX / count, averageY / count));
+			//			AddLocalMsgToChat(stringBuilder.Append(postfix).ToString(), new Vector2Int(averageX / count, averageY / count));
 			AddLocalMsgToChat(stringBuilder.Append(postfix).ToString(), lastPos, null);
 		}
 	}
@@ -411,7 +409,7 @@ public partial class Chat
 		{
 			var getOrigin = NetworkIdentity.spawned[originator];
 			if (channels == ChatChannel.Local || channels == ChatChannel.Combat
-			                                  || channels == ChatChannel.Action)
+											  || channels == ChatChannel.Action)
 			{
 				LayerMask layerMask = LayerMask.GetMask("Door Closed");
 				if (Vector2.Distance(getOrigin.transform.position,
@@ -472,9 +470,9 @@ public partial class Chat
 	private static bool IsNamelessChan(ChatChannel channel)
 	{
 		if (channel.HasFlag(ChatChannel.System) ||
-		    channel.HasFlag(ChatChannel.Combat) ||
-		    channel.HasFlag(ChatChannel.Action) ||
-		    channel.HasFlag(ChatChannel.Examine))
+			channel.HasFlag(ChatChannel.Combat) ||
+			channel.HasFlag(ChatChannel.Action) ||
+			channel.HasFlag(ChatChannel.Examine))
 		{
 			return true;
 		}
